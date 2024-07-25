@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credential Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+        }
+        button {
+            cursor: pointer;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Enter Your Credentials</h2>
+        <input type="text" id="website" placeholder="Website/App Name" required>
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="saveCredentials()">Submit</button>
+    </div>
+
+    <script>
+        function saveCredentials() {
+            const website = document.getElementById('website').value;
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (website && username && password) {
+                const credentials = {
+                    website: website,
+                    username: username,
+                    password: password
+                };
+
+                let storedCredentials = localStorage.getItem('credentials');
+                if (storedCredentials) {
+                    storedCredentials = JSON.parse(storedCredentials);
+                } else {
+                    storedCredentials = [];
+                }
+                storedCredentials.push(credentials);
+                localStorage.setItem('credentials', JSON.stringify(storedCredentials));
+                window.location.href = 'mycredentials.html';
+            } else {
+                alert('Please fill out all fields');
+            }
+        }
+    </script>
+</body>
+</html>
